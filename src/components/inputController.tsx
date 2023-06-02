@@ -1,4 +1,4 @@
-import { useLayoutEffect } from 'react'
+import { useLayoutEffect, useState } from 'react'
 import MoveKeyState from '../interfaces/moveKeyState'
 import Portal from '../portal/portal'
 import divide from '../skills/divide.gif'
@@ -10,17 +10,17 @@ export const moveKeyState: MoveKeyState = {
 }
 
 export const InputController = () => {
+
+    const[count, setCount]= useState(0)
+
     useLayoutEffect(() => {
         const handleKeyState = (key: KeyboardEvent, isDown: number) => {
             const getKey = key.key
             if ('wasd'.includes(getKey)) {
                 moveKeyState[key.key as 'w' | 'a' | 's' | 'd'] = isDown
             } else if (getKey === ' ') {
-                <Portal>
-                    <style.skillContainer>
-                        <style.skillEffect src={divide} loading='lazy' />
-                    </style.skillContainer>
-                </Portal>
+                setCount((prev) => prev + 1)
+                
             }
         }
         const onKeyDown = (key: KeyboardEvent) => {
@@ -36,5 +36,15 @@ export const InputController = () => {
             window.removeEventListener('keyup', onKeyUp)
         }
     }, [])
-    return <></>
+    return (
+        <>
+        {
+            Array.from({ length : count }).map((_, idx) =>
+                <style.skillContainer key={idx}>
+                    <style.skillEffect src={divide} loading='lazy' />
+                </style.skillContainer>
+            )
+        }
+        </>
+    )
 }

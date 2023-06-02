@@ -1,5 +1,5 @@
 import { useState, useCallback, useLayoutEffect } from 'react'
-import { moveKeyState } from '../inputController'
+import { InputController, moveKeyState } from '../inputController'
 
 import PlayerPosition from '../../interfaces/playerPosition'
 
@@ -36,8 +36,7 @@ const Main = () => {
     return (
         <style.background>
             <style.character pos={getPos} />
-            <style.skillContainer id='skillContainer'>
-            </style.skillContainer>
+            <InputController/>
         </style.background>
     )
 }
