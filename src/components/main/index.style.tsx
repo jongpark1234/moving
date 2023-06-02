@@ -30,3 +30,13 @@ export const skillArea = styled.div`
     height: 100%;
     position: relative;
 `
+
+export const skillContainer = styled.div`
+    max-width: 100px;
+    height: auto;
+`
+
+export const skillEffect = styled.img`
+    width: 100%;
+    max-width: 100%;
+`

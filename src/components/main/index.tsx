@@ -36,6 +36,8 @@ const Main = () => {
     return (
         <style.background>
             <style.character pos={getPos} />
+            <style.skillContainer id='skillContainer'>
+            </style.skillContainer>
         </style.background>
     )
 }
