@@ -9,12 +9,19 @@ export const background = styled.div`
     background-color: white;
 `
 
-export const character = styled.div<{ pos: PlayerPosition }>`
+interface characterProps {
+    pos: PlayerPosition
+}
+
+export const character = styled.div.attrs<characterProps>((props) => ({
+    style: {
+        left: `${props.pos.x}px`,
+        bottom: `${props.pos.y}px`,
+    }
+}))<characterProps>`
     width: 10px;
     height: 10px;
     position: absolute;
-    left: ${props => props.pos.x}px;
-    bottom: ${props => props.pos.y}px;
     background-color: black;
 `
 
