@@ -1,23 +1,22 @@
 import { useLayoutEffect, useState } from 'react'
 import MoveKeyState from '../interfaces/moveKeyState'
-import Portal from '../portal/portal'
 import divide from '../skills/divide.gif'
 
 import * as style from './main/index.style'
 
 export const moveKeyState: MoveKeyState = {
-    w: 0, a: 0, s: 0, d: 0
+    ArrowUp: 0, ArrowLeft: 0, ArrowDown: 0, ArrowRight: 0
 }
 
 export const InputController = () => {
 
-    const[count, setCount]= useState(0)
+    const [count, setCount] = useState(0)
 
     useLayoutEffect(() => {
         const handleKeyState = (key: KeyboardEvent, isDown: number) => {
             const getKey = key.key
-            if ('wasd'.includes(getKey)) {
-                moveKeyState[key.key as 'w' | 'a' | 's' | 'd'] = isDown
+            if (['ArrowUp', 'ArrowLeft', 'ArrowDown', 'ArrowRight'].includes(getKey)) {
+                moveKeyState[key.key as 'ArrowUp' | 'ArrowLeft' | 'ArrowDown' | 'ArrowRight'] = isDown
             } else if (getKey === ' ') {
                 setCount((prev) => prev + 1)
                 

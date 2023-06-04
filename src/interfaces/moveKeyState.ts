@@ -1,7 +1,7 @@
 interface MoveKeyState {
-    w: number
-    a: number
-    s: number
-    d: number
+    ArrowUp: number
+    ArrowLeft: number
+    ArrowDown: number
+    ArrowRight: number
 }
 export default MoveKeyState

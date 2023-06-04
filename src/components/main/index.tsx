@@ -9,7 +9,7 @@ const Main = () => {
     const [getPos, setPos] = useState<PlayerPosition>({
         x: 0, y: 0
     })
-    const MOVEMENT = 5
+    const MOVEMENT = 10
 
     const posLimit = (pos: number, limit: number): number => {
         return Math.min(Math.max(pos, 0), limit)
@@ -22,15 +22,10 @@ const Main = () => {
         })
     }, [getPos])
 
-    useLayoutEffect(() => {
-        const moveInterval = setInterval(() => {
-            const dx = moveKeyState.d - moveKeyState.a
-            const dy = moveKeyState.w - moveKeyState.s
-            move(dx, dy)
-        }, 1)
-        return () => {
-            clearInterval(moveInterval)
-        }
+    requestAnimationFrame(() => {
+        const dx = moveKeyState.ArrowRight - moveKeyState.ArrowLeft
+        const dy = moveKeyState.ArrowUp - moveKeyState.ArrowDown
+        move(dx, dy)
     })
 
     return (
