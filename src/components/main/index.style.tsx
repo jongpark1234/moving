@@ -1,6 +1,6 @@
 import styled from 'styled-components'
-import PlayerPosition from '../../interfaces/playerPosition'
-
+import { PlayerPosition } from '../../types'
+ 
 export const background = styled.div`
     width: 100vw;
     height: 100vh;
@@ -10,7 +10,7 @@ export const background = styled.div`
 `
 
 interface characterProps {
-    pos: PlayerPosition
+    pos: PlayerPosition.PlayerPosition
 }
 
 export const character = styled.div.attrs<characterProps>((props) => ({

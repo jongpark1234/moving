@@ -1,22 +1,21 @@
 import { useLayoutEffect, useState } from 'react'
-import MoveKeyState from '../interfaces/moveKeyState'
+import { MoveKeyState } from '../types'
 import divide from '../skills/divide.gif'
 
 import * as style from './main/index.style'
 
-export const moveKeyState: MoveKeyState = {
+export const moveKeyState: MoveKeyState.MoveKeyState = {
     ArrowUp: 0, ArrowLeft: 0, ArrowDown: 0, ArrowRight: 0
 }
 
 export const InputController = () => {
-
     const [count, setCount] = useState(0)
 
     useLayoutEffect(() => {
         const handleKeyState = (key: KeyboardEvent, isDown: number) => {
-            const getKey = key.key
-            if (['ArrowUp', 'ArrowLeft', 'ArrowDown', 'ArrowRight'].includes(getKey)) {
-                moveKeyState[key.key as 'ArrowUp' | 'ArrowLeft' | 'ArrowDown' | 'ArrowRight'] = isDown
+            const getKey: string = key.key
+            if (MoveKeyState.MoveKeyStateTypelist.includes(getKey)) {
+                moveKeyState[key.key as MoveKeyState.MoveKeyStateType] = isDown
             } else if (getKey === ' ') {
                 setCount((prev) => prev + 1)
                 
@@ -35,6 +34,7 @@ export const InputController = () => {
             window.removeEventListener('keyup', onKeyUp)
         }
     }, [])
+
     return (
         <>
         {
