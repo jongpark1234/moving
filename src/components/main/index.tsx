@@ -1,27 +1,23 @@
-import { useLayoutEffect } from 'react'
 import { InputController, moveKeyState } from '../inputController'
+import { useAnimate } from '../../hooks/useAnimate'
 
-import useCharacter from '../../stores/character'
+import useCharacter from '../../hooks/useCharacter'
 
 import * as style from './index.style'
 
 const Main = () => {
     const [x, y, move] = useCharacter()
 
-    useLayoutEffect(() => {
-        const func = () => {
-            requestAnimationFrame(func)
-            const dx = moveKeyState.ArrowRight - moveKeyState.ArrowLeft
-            const dy = moveKeyState.ArrowUp - moveKeyState.ArrowDown
-            move(dx, dy)
-        }
-        func()
-    }, [])
+    useAnimate(() => {
+        const dx = moveKeyState.ArrowRight - moveKeyState.ArrowLeft
+        const dy = moveKeyState.ArrowUp - moveKeyState.ArrowDown
+        move(dx, dy)
+    })
 
     return (
         <style.background>
             <InputController/>
-            <style.character pos={{x, y}} />
+            <style.character pos={{ x, y }} />
         </style.background>
     )
 }
