@@ -9,16 +9,16 @@ export const background = styled.div`
     background-color: white;
 `
 
-interface characterProps {
+interface CharacterProps {
     pos: PlayerPosition.PlayerPosition
 }
 
-export const character = styled.div.attrs<characterProps>((props) => ({
+export const character = styled.div.attrs<CharacterProps>((props) => ({
     style: {
         left: `${props.pos.x}px`,
         bottom: `${props.pos.y}px`,
     }
-}))<characterProps>`
+}))<CharacterProps>`
     width: 10px;
     height: 10px;
     position: absolute;
@@ -31,9 +31,12 @@ export const skillArea = styled.div`
     position: relative;
 `
 
-export const skillContainer = styled.div`
-    max-width: 100px;
+export const skillContainer = styled.div<{ width: number, pos: PlayerPosition.PlayerPosition }>`
+    width: ${props => props.width}px;
     height: auto;
+    position: absolute;
+    left: ${props => props.pos.x}px;
+    bottom: ${props => props.pos.y}px;
 `
 
 export const skillEffect = styled.img`

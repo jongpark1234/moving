@@ -16,7 +16,7 @@ const Main = () => {
 
     return (
         <style.background>
-            <InputController/>
+            <InputController pos={{ x: x, y: y }}/>
             <style.character pos={{ x, y }} />
         </style.background>
     )
