@@ -11,18 +11,20 @@ export const background = styled.div`
 
 interface CharacterProps {
     pos: PlayerPosition.PlayerPosition
+    dx: number
+    dy: number
 }
 
-export const character = styled.div.attrs<CharacterProps>((props) => ({
+export const character = styled.img.attrs<CharacterProps>((props) => ({
     style: {
         left: `${props.pos.x}px`,
         bottom: `${props.pos.y}px`,
     }
 }))<CharacterProps>`
-    width: 10px;
-    height: 10px;
+    width: 145px;
+    height: 190px;
     position: absolute;
-    background-color: black;
+    transform: scaleX(${props => props.dx});
 `
 
 export const skillArea = styled.div`
@@ -31,15 +33,23 @@ export const skillArea = styled.div`
     position: relative;
 `
 
-export const skillContainer = styled.div<{ width: number, pos: PlayerPosition.PlayerPosition }>`
+export const skillContainer = styled.div<{ width: number, pos: PlayerPosition.PlayerPosition, dx: number }>`
     width: ${props => props.width}px;
     height: auto;
     position: absolute;
-    left: ${props => props.pos.x}px;
+    left: ${
+        (props) => props.pos.x - (
+            props.dx === 1 ? -145 : 
+            props.dx === 0 ? props.width / 2 :
+            props.width
+        )
+    }px;
     bottom: ${props => props.pos.y}px;
 `
 
-export const skillEffect = styled.img`
+export const skillEffect = styled.img<{ dx: number }>`
     width: 100%;
     max-width: 100%;
+    transform: scaleX(${props => props.dx});
+    transform: rotate(45deg)
 `
