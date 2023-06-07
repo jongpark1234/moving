@@ -13,43 +13,44 @@ export const moveKeyState: MoveKeyState.MoveKeyState = {
 }
 
 export const moveDirState: MoveDirState.MoveDirState = {
-    xState: 1, yState: 0
+    xState: 0, yState: 0
 }
 
-const xMoveDeque: string[] = []
-const yMoveDeque: string[] = []
-
-const moveHandler = (key: string) => {
-    if (xMoveDeque.length === 0) {
-
-    }
-    else if (xMoveDeque.length === 1) {
-        if (xMoveDeque.includes(key)) {
-            
+const moveXHandler = (curState: MoveKeyState.MoveKeyState) => {
+    if (moveKeyState.ArrowLeft && moveKeyState.ArrowRight) {
+        if (!(curState.ArrowLeft && curState.ArrowRight)) {
+            if (moveDirState.xState === 1) {
+                moveDirState.xState = -1
+            } else if (moveDirState.xState === -1) {
+                moveDirState.xState = 1
+            }
         }
+    } else if (moveKeyState.ArrowLeft) {
+        moveDirState.xState = -1
+    } else if (moveKeyState.ArrowRight) {
+        moveDirState.xState = 1
     } else {
-
+        moveDirState.xState = 0
+    }
+}
+const moveYHandler = (curState: MoveKeyState.MoveKeyState) => {
+    if (moveKeyState.ArrowDown && moveKeyState.ArrowUp) {
+        if (!(curState.ArrowDown && curState.ArrowUp)) {
+            if (moveDirState.yState === 1) {
+                moveDirState.yState = -1
+            } else if (moveDirState.yState === -1) {
+                moveDirState.yState = 1
+            }
+        }
+    } else if (moveKeyState.ArrowDown) {
+        moveDirState.yState = -1
+    } else if (moveKeyState.ArrowUp) {
+        moveDirState.yState = 1
+    } else {
+        moveDirState.yState = 0
     }
 }
 
-const dirHandler = (): void => {
-    switch (moveDirState.xState) {
-        case 1:
-            if (moveKeyState.ArrowLeft === 1) {
-                moveDirState.xState *= -1
-            }
-            break
-        case 0:
-            break
-        case -1:
-            if (moveKeyState.ArrowRight === 1) {
-                moveDirState.xState *= -1
-            }
-            break
-        default:
-            break
-    }
-}
 
 const skillHandler = (key: string): [string, number] => {
     let src, width
@@ -98,9 +99,10 @@ export const InputController = (
             const getKey: string = key.key
 
             if (MoveKeyState.MoveKeyStateTypelist.includes(getKey)) {
+                const curState = { ...moveKeyState }
                 moveKeyState[getKey as MoveKeyState.MoveKeyStateType] = isDown
-                moveHandler(getKey)
-                dirHandler()
+                moveXHandler(curState)
+                moveYHandler(curState)
 
             } else if (SkillKeyState.SkillKeyStateTypelist.includes(getKey) && isDown === 1) {
                 const [skill, width] = skillHandler(getKey)
@@ -135,7 +137,7 @@ export const InputController = (
     
     return (
         <>
-            { skills.map(({ x, y, skill, width, dx }, idx) => {
+            { skills.map(({ x, y, dx, skill, width}, idx) => {
                 return (
                     <style.skillContainer width={width} pos={{ x, y }} dx={dx} key={idx}>
                         <style.skillEffect src={skill} dx={dx} loading='lazy'/>

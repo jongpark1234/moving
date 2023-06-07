@@ -11,8 +11,7 @@ export const background = styled.div`
 
 interface CharacterProps {
     pos: PlayerPosition.PlayerPosition
-    dx: number
-    dy: number
+    facing: number
 }
 
 export const character = styled.img.attrs<CharacterProps>((props) => ({
@@ -24,7 +23,7 @@ export const character = styled.img.attrs<CharacterProps>((props) => ({
     width: 145px;
     height: 190px;
     position: absolute;
-    transform: scaleX(${props => props.dx});
+    transform: scaleX(${props => props.facing});
 `
 
 export const skillArea = styled.div`

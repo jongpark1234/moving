@@ -9,13 +9,12 @@ import * as style from './index.style'
 
 const Main = () => {
     const [dir, setDir] = useState<number[]>([0, 0])
+    const [facing, setFacing] = useState<number>(1)
     const [x, y, move] = useCharacter()
 
     useAnimate(() => {
-        setDir([
-            moveKeyState.ArrowRight - moveKeyState.ArrowLeft,
-            moveKeyState.ArrowUp - moveKeyState.ArrowDown
-        ])
+        setDir([moveDirState.xState, moveDirState.yState])
+        setFacing(prev => moveDirState.xState === 0 ? prev : moveDirState.xState)
         move(dir)
     })
 
@@ -25,8 +24,7 @@ const Main = () => {
             <style.character 
                 src={Character}
                 pos={{ x: x, y: y }}
-                dx={moveDirState.xState}
-                dy={moveDirState.yState}
+                facing={facing}
             />
         </style.background>
     )
