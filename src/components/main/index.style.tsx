@@ -32,14 +32,20 @@ export const skillArea = styled.div`
     position: relative;
 `
 
-export const skillContainer = styled.div<{ width: number, pos: PlayerPosition.PlayerPosition, dx: number }>`
+interface SkillContainerProps {
+    pos: PlayerPosition.PlayerPosition
+    width: number
+    direction: number
+}
+
+export const skillContainer = styled.div<SkillContainerProps>`
     width: ${props => props.width}px;
     height: auto;
     position: absolute;
     left: ${
         (props) => props.pos.x - (
-            props.dx === 1 ? -145 : 
-            props.dx === 0 ? props.width / 2 :
+            props.direction === 1 ? -145 : 
+            props.direction === 0 ? props.width / 2 :
             props.width
         )
     }px;
@@ -49,6 +55,5 @@ export const skillContainer = styled.div<{ width: number, pos: PlayerPosition.Pl
 export const skillEffect = styled.img<{ dx: number }>`
     width: 100%;
     max-width: 100%;
-    transform: scaleX(${props => props.dx});
     transform: rotate(45deg)
 `

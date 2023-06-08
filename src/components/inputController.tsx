@@ -19,11 +19,7 @@ export const moveDirState: MoveDirState.MoveDirState = {
 const moveXHandler = (curState: MoveKeyState.MoveKeyState) => {
     if (moveKeyState.ArrowLeft && moveKeyState.ArrowRight) {
         if (!(curState.ArrowLeft && curState.ArrowRight)) {
-            if (moveDirState.xState === 1) {
-                moveDirState.xState = -1
-            } else if (moveDirState.xState === -1) {
-                moveDirState.xState = 1
-            }
+            moveDirState.xState *= -1
         }
     } else if (moveKeyState.ArrowLeft) {
         moveDirState.xState = -1
@@ -33,14 +29,11 @@ const moveXHandler = (curState: MoveKeyState.MoveKeyState) => {
         moveDirState.xState = 0
     }
 }
+
 const moveYHandler = (curState: MoveKeyState.MoveKeyState) => {
     if (moveKeyState.ArrowDown && moveKeyState.ArrowUp) {
         if (!(curState.ArrowDown && curState.ArrowUp)) {
-            if (moveDirState.yState === 1) {
-                moveDirState.yState = -1
-            } else if (moveDirState.yState === -1) {
-                moveDirState.yState = 1
-            }
+            moveDirState.yState *= -1
         }
     } else if (moveKeyState.ArrowDown) {
         moveDirState.yState = -1
@@ -90,6 +83,7 @@ const skillDegHandler = (): number => {
 export const InputController = (
         props: { pos: PlayerPosition.PlayerPosition }
     ) => {
+
     const [skills, setSkills] = useState<SkillState[]>([])
 
     useEffect(() => {
@@ -137,9 +131,9 @@ export const InputController = (
     
     return (
         <>
-            { skills.map(({ x, y, dx, skill, width}, idx) => {
+            { skills.map(({ x, y, dx, skill, width }, idx) => {
                 return (
-                    <style.skillContainer width={width} pos={{ x, y }} dx={dx} key={idx}>
+                    <style.skillContainer width={width} pos={{ x, y }} direction={dx} key={idx}>
                         <style.skillEffect src={skill} dx={dx} loading='lazy'/>
                     </style.skillContainer>
                 )
