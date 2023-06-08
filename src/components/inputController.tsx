@@ -91,8 +91,9 @@ const skillDirectionHandler = (facing: CharacterFacingState): [number, number] =
 }
 
 
-export const InputController = () => {
-    const [xPos, yPos, facing, move, face] = useCharacter()
+export const InputController = (
+    props: { pos: CharacterPositionState }
+) => {
     const [skills, setSkills] = useState<SkillState[]>([])
 
     useEffect(() => {
@@ -105,14 +106,13 @@ export const InputController = () => {
                 const curState = { ...moveKeyState }
                 moveKeyState[getKey as keyof MoveKeyState] = isDown
                 moveDirHandler(curState)
-
             } else if ('qwer'.includes(getKey) && isDown === 1) {
                 const [skill, width] = skillHandler(getKey)
                 
                 setSkills(prev => [...prev, {
-                    x: xPos,
-                    y: yPos,
-                    direction: skillDirectionHandler(facing),
+                    x: props.pos.xState,
+                    y: props.pos.yState,
+                    direction: [0, 0],
                     skill: skill,
                     width: width,
                 }])
@@ -133,13 +133,8 @@ export const InputController = () => {
             window.removeEventListener('keydown', onKeyDown)
             window.removeEventListener('keyup', onKeyUp)
         }
-    }, [xPos, yPos])
+    }, [props.pos])
 
-    useAnimate(() => {
-        move(moveDirState)
-        face(moveDirState)
-    })
-    
     return (
         <>
             { skills.map(({ x, y, direction, skill, width }, idx) => {
