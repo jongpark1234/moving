@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { InputController, moveDirState } from '../inputController'
+import { InputController, characterFacingState, moveDirState } from '../inputController'
 import { useAnimate } from '../../hooks/useAnimate'
 import Character from '../../images/characters/character_standing.png'
 import Moving from '../../images/characters/character_moving.gif'
@@ -9,20 +9,19 @@ import useCharacter from '../../hooks/useCharacter'
 import * as style from './index.style'
 
 const Main = () => {
-    const [dir, setDir] = useState<number[]>([0, 0])
-    const [x, y, facing, move] = useCharacter()
+    const [xPos, yPos, facing, move, face] = useCharacter()
 
-    useAnimate(() => {
-        setDir([moveDirState.xState, moveDirState.yState])
-        move(dir)
-    })
+    // useAnimate(() => {
+    // })
+
+    console.log(xPos, yPos)
 
     return (
         <style.background>
-            <InputController pos={{ x: x, y: y }}/>
+            <InputController/>
             <style.character 
-                src={moveDirState.xState === 0 && moveDirState.yState === 0 ? Character : Moving}
-                pos={{ x: x, y: y }}
+                src={!(moveDirState.xState || moveDirState.yState) ? Character : Moving}
+                pos={{ xState: xPos, yState: yPos }}
                 facing={facing}
             />
         </style.background>

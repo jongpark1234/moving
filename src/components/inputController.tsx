@@ -1,22 +1,34 @@
 import { useEffect, useState } from 'react'
-import { MoveDirState, MoveKeyState, PlayerPosition, SkillKeyState } from '../types'
+
 import SkillState from '../interfaces/skillState'
+import MoveKeyState from '../interfaces/moveKeyState'
+import MoveDirState from '../interfaces/moveDirState'
+import CharacterPositionState from '../interfaces/characterPositionState'
+
 import divide1 from '../images/skills/divide1.gif'
 import divide2 from '../images/skills/divide2.gif'
 import divide3 from '../images/skills/divide3.gif'
 import ruin from '../images/skills/ruin.gif'
 
 import * as style from './main/index.style'
+import CharacterFacingState from '../interfaces/characterFacingState'
+import useCharacter from '../hooks/useCharacter'
+import { useAnimate } from '../hooks/useAnimate'
 
-export const moveKeyState: MoveKeyState.MoveKeyState = {
+export const moveKeyState: MoveKeyState = {
     ArrowUp: 0, ArrowLeft: 0, ArrowDown: 0, ArrowRight: 0
 }
 
-export const moveDirState: MoveDirState.MoveDirState = {
+export const moveDirState: MoveDirState = {
     xState: 0, yState: 0
 }
 
-const moveXHandler = (curState: MoveKeyState.MoveKeyState) => {
+export const characterFacingState: CharacterFacingState = {
+    xState: 1, yState: 0
+}
+
+const moveDirHandler = (curState: MoveKeyState): void => {
+    // Handle x state
     if (moveKeyState.ArrowLeft && moveKeyState.ArrowRight) {
         if (!(curState.ArrowLeft && curState.ArrowRight)) {
             moveDirState.xState *= -1
@@ -28,9 +40,7 @@ const moveXHandler = (curState: MoveKeyState.MoveKeyState) => {
     } else {
         moveDirState.xState = 0
     }
-}
-
-const moveYHandler = (curState: MoveKeyState.MoveKeyState) => {
+    // Handle y state
     if (moveKeyState.ArrowDown && moveKeyState.ArrowUp) {
         if (!(curState.ArrowDown && curState.ArrowUp)) {
             moveDirState.yState *= -1
@@ -72,52 +82,48 @@ const skillHandler = (key: string): [string, number] => {
     return [src, width]
 }
 
-const skillDegHandler = (): number => {
-    if (moveKeyState) {
-
+const skillDirectionHandler = (facing: CharacterFacingState): [number, number] => {
+    const { xState, yState } = moveDirState
+    if (xState || yState) {
+        return [xState, yState]
     }
-    return 0
+    return [facing.xState, facing.yState]
 }
 
 
-export const InputController = (
-        props: { pos: PlayerPosition.PlayerPosition }
-    ) => {
-
+export const InputController = () => {
+    const [xPos, yPos, facing, move, face] = useCharacter()
     const [skills, setSkills] = useState<SkillState[]>([])
 
     useEffect(() => {
 
-        const handleKeyState = (key: KeyboardEvent, isDown: number) => {
+        const handleKeyState = (key: KeyboardEvent, isDown: number): void => {
 
             const getKey: string = key.key
 
-            if (MoveKeyState.MoveKeyStateTypelist.includes(getKey)) {
+            if (['ArrowUp', 'ArrowLeft', 'ArrowDown', 'ArrowRight'].includes(getKey)) {
                 const curState = { ...moveKeyState }
-                moveKeyState[getKey as MoveKeyState.MoveKeyStateType] = isDown
-                moveXHandler(curState)
-                moveYHandler(curState)
+                moveKeyState[getKey as keyof MoveKeyState] = isDown
+                moveDirHandler(curState)
 
-            } else if (SkillKeyState.SkillKeyStateTypelist.includes(getKey) && isDown === 1) {
+            } else if ('qwer'.includes(getKey) && isDown === 1) {
                 const [skill, width] = skillHandler(getKey)
                 
-                const newSkill = {
-                    x: props.pos.x,
-                    y: props.pos.y, 
-                    dx: moveDirState.xState,
+                setSkills(prev => [...prev, {
+                    x: xPos,
+                    y: yPos,
+                    direction: skillDirectionHandler(facing),
                     skill: skill,
                     width: width,
-                }
-
-                setSkills(prev => [...prev, newSkill])
+                }])
             }
         }
 
-        const onKeyDown = (key: KeyboardEvent) => {
+        const onKeyDown = (key: KeyboardEvent): void => {
             handleKeyState(key, 1)
         }
 
-        const onKeyUp = (key: KeyboardEvent) => {
+        const onKeyUp = (key: KeyboardEvent): void => {
             handleKeyState(key, 0)
         }
 
@@ -127,14 +133,19 @@ export const InputController = (
             window.removeEventListener('keydown', onKeyDown)
             window.removeEventListener('keyup', onKeyUp)
         }
-    }, [props.pos])
+    }, [xPos, yPos])
+
+    useAnimate(() => {
+        move(moveDirState)
+        face(moveDirState)
+    })
     
     return (
         <>
-            { skills.map(({ x, y, dx, skill, width }, idx) => {
+            { skills.map(({ x, y, direction, skill, width }, idx) => {
                 return (
-                    <style.skillContainer width={width} pos={{ x, y }} direction={dx} key={idx}>
-                        <style.skillEffect src={skill} dx={dx} loading='lazy'/>
+                    <style.skillContainer width={width} pos={{ xState: x, yState: y }} direction={direction} key={idx}>
+                        <style.skillEffect src={skill} direction={direction} loading='lazy'/>
                     </style.skillContainer>
                 )
             }) }

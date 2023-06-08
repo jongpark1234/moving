@@ -1,5 +1,6 @@
 import styled from 'styled-components'
-import { PlayerPosition } from '../../types'
+import CharacterPositionState from '../../interfaces/characterPositionState'
+import CharacterFacingState from '../../interfaces/characterFacingState'
  
 export const background = styled.div`
     width: 100vw;
@@ -10,20 +11,20 @@ export const background = styled.div`
 `
 
 interface CharacterProps {
-    pos: PlayerPosition.PlayerPosition
-    facing: number
+    pos: CharacterPositionState
+    facing: CharacterFacingState
 }
 
 export const character = styled.img.attrs<CharacterProps>((props) => ({
     style: {
-        left: `${props.pos.x}px`,
-        bottom: `${props.pos.y}px`,
+        left: `${props.pos.xState}px`,
+        bottom: `${props.pos.yState}px`,
     }
 }))<CharacterProps>`
     width: 145px;
     height: 190px;
     position: absolute;
-    transform: scaleX(${props => props.facing});
+    transform: scaleX(${props => props.facing.xState});
 `
 
 export const skillArea = styled.div`
@@ -33,9 +34,9 @@ export const skillArea = styled.div`
 `
 
 interface SkillContainerProps {
-    pos: PlayerPosition.PlayerPosition
+    pos: CharacterPositionState
     width: number
-    direction: number
+    direction: [number, number]
 }
 
 export const skillContainer = styled.div<SkillContainerProps>`
@@ -43,17 +44,16 @@ export const skillContainer = styled.div<SkillContainerProps>`
     height: auto;
     position: absolute;
     left: ${
-        (props) => props.pos.x - (
-            props.direction === 1 ? -145 : 
-            props.direction === 0 ? props.width / 2 :
+        props => props.pos.xState - (
+            props.direction[0] === 1 ? -145 : 
+            props.direction[0] === 0 ? props.width / 2 :
             props.width
         )
     }px;
-    bottom: ${props => props.pos.y}px;
+    bottom: ${props => props.pos.yState}px;
 `
 
-export const skillEffect = styled.img<{ dx: number }>`
+export const skillEffect = styled.img<{ direction: [number, number] }>`
     width: 100%;
     max-width: 100%;
-    transform: rotate(45deg)
 `
