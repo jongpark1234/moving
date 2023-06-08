@@ -1,7 +1,7 @@
 interface SkillState {
     x: number
     y: number
-    dx: number
+    direction: [number, number]
     skill: string
     width: number
 }
