@@ -27,27 +27,36 @@ export const useCharacter: () => [
         xState: 0, yState: 0
     })
     
-    const posLimit = useCallback((pos: number, limit: number) => {
-        return Math.min(Math.max(pos, 0), limit)
-    }, [])
-
-    const move = useCallback((dir: MoveDirStateTypes): void => {
-        const { xState, yState } = dir
+    const move = useCallback((dirState: MoveDirStateTypes): void => {
+        const posLimit = (pos: number, limit: number) => {
+            return Math.min(Math.max(pos, 0), limit) // 위치는 0 보다 작아질 수 없으며, 화면의 크기보다 커질 수 없다.
+        }
+        const { xState, yState } = dirState
         setPos(prev => ({
             xState: posLimit(prev.xState + xState * MOVEMENT, window.innerWidth - WIDTH),
             yState: posLimit(prev.yState + yState * MOVEMENT, window.innerHeight - HEIGHT),
         }))
-    }, [MOVEMENT, WIDTH, HEIGHT, posLimit])
+    }, [MOVEMENT, WIDTH, HEIGHT])
 
     const direct = useCallback((prevState: MoveKeyStateTypes, curState: MoveKeyStateTypes) => {
-        const x = (curState.ArrowLeft + curState.ArrowRight === 2) && (prevState.ArrowLeft + prevState.ArrowRight < 2) ?
-        -dir.xState : curState.ArrowLeft ? -1 : curState.ArrowRight ? 1 : 0
-        const y = (curState.ArrowDown + curState.ArrowUp === 2) && (prevState.ArrowDown + prevState.ArrowUp < 2) ? 
-        -dir.yState : curState.ArrowDown ? -1 : curState.ArrowUp ? 1 : 0
-        setDir(() => ({
-            xState: x, yState: y
+        const calcDir = (lo: keyof MoveKeyStateTypes, hi: keyof MoveKeyStateTypes, temp: number) => {
+            if (curState[lo] && curState[hi]) { // 좌우 또는 상하가 동시에 입력된 경우
+                // 이전 tick에서도 동시입력이었으면 현재 방향 유지,
+                // 아닐 경우 반대 방향으로 turn
+                return temp * (!(prevState[lo] && prevState[hi]) ? -1 : 1)
+            } else if (curState[lo]) { // 해당 축 방향 감소
+                return -1
+            } else if (curState[hi]) { // 해당 축 방향 증가
+                return 1
+            } else { // 현상 유지
+                return 0
+            }
+        }
+        setDir(prev => ({ 
+            xState: calcDir('ArrowLeft', 'ArrowRight', prev.xState),
+            yState: calcDir('ArrowDown', 'ArrowUp', prev.yState),
         } as MoveDirStateTypes))
-    }, [dir, setDir])
+    }, [setDir])
     
     const face = useCallback((dir: MoveDirStateTypes) => {
         if (dir.xState) { // xState에 값이 들어와있을 경우에만 변경 ( 움직이지 않고있을 때는 변경하지 않음 )
