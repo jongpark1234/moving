@@ -1,8 +1,8 @@
-interface MoveKeyState {
+interface MoveKeyStateTypes {
     ArrowUp: number
     ArrowLeft: number
     ArrowDown: number
     ArrowRight: number
 }
 
-export default MoveKeyState
+export default MoveKeyStateTypes

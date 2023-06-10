@@ -1,4 +1,4 @@
-interface SkillState {
+interface SkillStateTypes {
     x: number
     y: number
     direction: [number, number]
@@ -6,4 +6,4 @@ interface SkillState {
     width: number
 }
 
-export default SkillState
+export default SkillStateTypes
