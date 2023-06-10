@@ -1,6 +1,6 @@
 import styled from 'styled-components'
-import CharacterPositionState from '../../interfaces/characterPositionState'
-import CharacterFacingState from '../../interfaces/characterFacingState'
+import CharacterPositionStateTypes from '../../interfaces/characterPositionStateTypes'
+import CharacterFacingStateTypes from '../../interfaces/characterFacingStateTypes'
  
 export const background = styled.div`
     width: 100vw;
@@ -11,8 +11,8 @@ export const background = styled.div`
 `
 
 interface CharacterProps {
-    pos: CharacterPositionState
-    facing: CharacterFacingState
+    pos: CharacterPositionStateTypes
+    facing: CharacterFacingStateTypes
 }
 
 export const character = styled.img.attrs<CharacterProps>((props) => ({
@@ -34,7 +34,7 @@ export const skillArea = styled.div`
 `
 
 interface SkillContainerProps {
-    pos: CharacterPositionState
+    pos: CharacterPositionStateTypes
     width: number
     direction: [number, number]
 }
