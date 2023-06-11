@@ -1,8 +1,4 @@
-import { useCallback, useState } from 'react'
-
-const useSkill: () => [] = () => {
+export const useSkill: () => [] = () => {
     
     return []
 }
-
-export default useSkill
