@@ -11,6 +11,8 @@ export const background = styled.div`
 `
 
 interface CharacterProps {
+    Width: number
+    Height: number
     pos: CharacterPositionStateTypes
     facing: CharacterFacingStateTypes
 }
@@ -21,8 +23,8 @@ export const character = styled.img.attrs<CharacterProps>((props) => ({
         bottom: `${props.pos.yState}px`,
     }
 }))<CharacterProps>`
-    width: 145px;
-    height: 190px;
+    width: ${props => props.Width}px;
+    height: ${props => props.Height}px;
     position: absolute;
     transform: scaleX(${props => props.facing.xState});
 `

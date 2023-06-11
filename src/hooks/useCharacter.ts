@@ -4,15 +4,9 @@ import CharacterPositionStateTypes from '../interfaces/characterPositionStateTyp
 import CharacterFacingStateTypes from '../interfaces/characterFacingStateTypes'
 import MoveDirStateTypes from '../interfaces/moveDirStateTypes'
 import MoveKeyStateTypes from '../interfaces/moveKeyStateTypes'
+import CharacterTypes from '../interfaces/characterTypes'
 
-export const useCharacter: () => [
-    CharacterPositionStateTypes, // pos
-    MoveDirStateTypes, // dir
-    CharacterFacingStateTypes, // facing
-    (dir: MoveDirStateTypes) => void, // move
-    (prevState: MoveKeyStateTypes, curState: MoveKeyStateTypes) => void, // direct
-    (dir: MoveDirStateTypes) => void, // face
-] = () => {
+export const useCharacter: () => CharacterTypes = () => {
     const [WIDTH] = useState<number>(145);
     const [HEIGHT] = useState<number>(190);
     const [MOVEMENT] = useState<number>(10);
@@ -38,15 +32,15 @@ export const useCharacter: () => [
         }))
     }, [MOVEMENT, WIDTH, HEIGHT])
 
-    const direct = useCallback((prevState: MoveKeyStateTypes, curState: MoveKeyStateTypes) => {
+    const direct = useCallback((prevKeyState: MoveKeyStateTypes, curKeyState: MoveKeyStateTypes) => {
         const calcDir = (lo: keyof MoveKeyStateTypes, hi: keyof MoveKeyStateTypes, temp: number) => {
-            if (curState[lo] && curState[hi]) { // 좌우 또는 상하가 동시에 입력된 경우
+            if (curKeyState[lo] && curKeyState[hi]) { // 좌우 또는 상하가 동시에 입력된 경우
                 // 이전 tick에서도 동시입력이었으면 현재 방향 유지,
                 // 아닐 경우 반대 방향으로 turn
-                return temp * (!(prevState[lo] && prevState[hi]) ? -1 : 1)
-            } else if (curState[lo]) { // 해당 축 방향 감소
+                return temp * (!(prevKeyState[lo] && prevKeyState[hi]) ? -1 : 1)
+            } else if (curKeyState[lo]) { // 해당 축 방향 감소
                 return -1
-            } else if (curState[hi]) { // 해당 축 방향 증가
+            } else if (curKeyState[hi]) { // 해당 축 방향 증가
                 return 1
             } else { // 현상 유지
                 return 0
@@ -58,13 +52,23 @@ export const useCharacter: () => [
         } as MoveDirStateTypes))
     }, [setDir])
     
-    const face = useCallback((dir: MoveDirStateTypes) => {
-        if (dir.xState) { // xState에 값이 들어와있을 경우에만 변경 ( 움직이지 않고있을 때는 변경하지 않음 )
+    const face = useCallback((dirState: MoveDirStateTypes) => {
+        if (dirState.xState) { // xState에 값이 들어와있을 경우에만 변경 ( 움직이지 않고있을 때는 변경하지 않음 )
             setFacing((prev) => ({
-                xState: dir.xState, yState: prev.yState
+                xState: dirState.xState, yState: prev.yState
             }))
         }
     }, [setFacing])
 
-    return [pos, dir, facing, move, direct, face]
+    return {
+        width: WIDTH,
+        height: HEIGHT,
+        movement: MOVEMENT,
+        pos: pos,
+        dir: dir,
+        facing: facing,
+        move: move,
+        direct: direct,
+        face: face
+    } as CharacterTypes
 }

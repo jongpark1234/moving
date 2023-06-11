@@ -18,25 +18,27 @@ const Main = () => {
     const [curKeyState, setCurKeyState] = useState<MoveKeyStateTypes>({
         ArrowUp: 0, ArrowLeft: 0, ArrowDown: 0, ArrowRight: 0
     })
-    const [pos, dir, facing, move, direct, face] = useCharacter()
+    const character = useCharacter()
     
     const animate = useCallback(() => {
-        setPrevKeyState({ ...curKeyState })
-        setCurKeyState({ ...moveKeyState })
-        direct(prevKeyState, curKeyState)
-        face(dir)
-        move(dir)
-    }, [move, direct, face, dir, curKeyState, prevKeyState])
+        setPrevKeyState(() => ({ ...curKeyState }))
+        setCurKeyState(() => ({ ...moveKeyState }))
+        character.direct(prevKeyState, curKeyState)
+        character.face(character.dir)
+        character.move(character.dir)
+    }, [character, curKeyState, prevKeyState])
     
     useAnimate(animate)
 
     return (
         <style.background>
-            <InputController pos={pos}/>
+            <InputController pos={character.pos}/>
             <style.character 
-                src={!(dir.xState || dir.yState) ? Character : Moving}
-                pos={pos}
-                facing={facing}
+                src={!(character.dir.xState || character.dir.yState) ? Character : Moving}
+                Width={character.width}
+                Height={character.height}
+                pos={character.pos}
+                facing={character.facing}
             />
         </style.background>
     )
