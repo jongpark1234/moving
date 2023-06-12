@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import CharacterPositionStateTypes from '../../interfaces/characterPositionStateTypes'
+import PositionStateTypes from '../../interfaces/positionStateTypes'
 import CharacterFacingStateTypes from '../../interfaces/characterFacingStateTypes'
  
 export const background = styled.div`
@@ -13,7 +13,7 @@ export const background = styled.div`
 interface CharacterProps {
     Width: number
     Height: number
-    pos: CharacterPositionStateTypes
+    pos: PositionStateTypes
     facing: CharacterFacingStateTypes
 }
 
@@ -36,7 +36,7 @@ export const skillArea = styled.div`
 `
 
 interface SkillContainerProps {
-    pos: CharacterPositionStateTypes
+    pos: PositionStateTypes
     width: number
     direction: [number, number]
 }

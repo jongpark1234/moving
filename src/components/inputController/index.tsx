@@ -1,6 +1,5 @@
-import { useEffect, useState } from 'react'
+import { useLayoutEffect } from 'react'
 
-import CharacterPositionStateTypes from '../../interfaces/characterPositionStateTypes'
 import MoveKeyStateTypes from '../../interfaces/moveKeyStateTypes'
 import SkillKeyStateTypes from '../../interfaces/skillKeyStateTypes'
 
@@ -14,7 +13,7 @@ export const skillKeyState: SkillKeyStateTypes = {
 export const InputController = (
 ) => {
 
-    useEffect(() => {
+    useLayoutEffect(() => {
         const handleKeyState = (key: KeyboardEvent, isDown: number): void => {
             const getKey: string = key.key
             if (['ArrowUp', 'ArrowLeft', 'ArrowDown', 'ArrowRight'].includes(getKey)) {

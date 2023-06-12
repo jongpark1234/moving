@@ -1,6 +1,6 @@
 import { useCallback, useState } from 'react'
 
-import CharacterPositionStateTypes from '../interfaces/characterPositionStateTypes'
+import PositionStateTypes from '../interfaces/positionStateTypes'
 import CharacterFacingStateTypes from '../interfaces/characterFacingStateTypes'
 import MoveDirStateTypes from '../interfaces/moveDirStateTypes'
 import MoveKeyStateTypes from '../interfaces/moveKeyStateTypes'
@@ -11,7 +11,7 @@ export const useCharacter: () => CharacterTypes = () => {
     const [HEIGHT] = useState<number>(190);
     const [MOVEMENT] = useState<number>(10);
 
-    const [pos, setPos] = useState<CharacterPositionStateTypes>({
+    const [pos, setPos] = useState<PositionStateTypes>({
         xState: 0, yState: 0
     })
     const [facing, setFacing] = useState<CharacterFacingStateTypes>({

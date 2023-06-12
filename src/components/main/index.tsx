@@ -21,10 +21,11 @@ const Main = () => {
 
     const animate = useCallback(() => {
         character.direct(prevMoveKeyState, moveKeyState)
-        setPrevMoveKeyState(() => ({ ...moveKeyState }))
+        setPrevMoveKeyState(() => ({ ...moveKeyState } as MoveKeyStateTypes))
         character.face(character.dir)
         character.move(character.dir)
-    }, [character, prevMoveKeyState])
+        skill.reload(skillKeyState, character.pos)
+    }, [character, skill, prevMoveKeyState])
     
     useAnimate(animate)
 
