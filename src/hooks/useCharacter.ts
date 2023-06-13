@@ -5,7 +5,6 @@ import CharacterFacingStateTypes from '../interfaces/character/characterFacingSt
 import MoveDirStateTypes from '../interfaces/character/moveDirStateTypes'
 import MoveKeyStateTypes from '../interfaces/character/moveKeyStateTypes'
 import CharacterTypes from '../interfaces/character/characterTypes'
-import SkillInfoStateTypes from '../interfaces/skill/skillInfoStateTypes'
 import { skills } from '../skills'
 import SkillSetListTypes from '../interfaces/skill/skillSetListTypes'
 

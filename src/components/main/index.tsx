@@ -18,7 +18,7 @@ const Main = () => {
         ArrowUp: 0, ArrowLeft: 0, ArrowDown: 0, ArrowRight: 0
     })
     const character = useCharacter()
-    const skill = useSkill(character.skillList)
+    const skill = useSkill(character)
     
     const animate = useCallback(() => {
         character.direct(prevMoveKeyState, moveKeyState)
@@ -36,8 +36,8 @@ const Main = () => {
             <Status cooldown={skill.cooldownList}/>
             <style.character 
                 src={!(character.dir.xState || character.dir.yState) ? Character : Moving}
-                Width={character.width}
-                Height={character.height}
+                charWidth={character.width}
+                charHeight={character.height}
                 pos={character.pos}
                 facing={character.facing}
             />
@@ -45,8 +45,14 @@ const Main = () => {
                 {
                     skill.skillList.map((skill, idx) => {
                         return (
-                            <style.skillContainer pos={skill.pos} width={300} direction={[0, 0]} key={idx}>
-                                <style.skillEffect src={skill.animation} />
+                            <style.skillContainer 
+                            pos={skill.pos} 
+                            skillWidth={skill.width}
+                            charWidth={character.width}
+                            charHeight={character.height}
+                            positioning={skill.positioning}
+                            key={idx}>
+                                <style.skillEffect src={skill.src} loading='lazy'/>
                             </style.skillContainer>
                         )
                     })

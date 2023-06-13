@@ -1,9 +1,11 @@
 import PositionStateTypes from "../positionStateTypes"
+import SkillInfoStateTypes from "./skillInfoStateTypes"
+import SkillPositioningTypes from "./skillPositioningTypes"
 
-interface SkillObjectTypes {
+interface SkillObjectTypes extends SkillInfoStateTypes {
     pos: PositionStateTypes
     terminateTime: number
-    animation: string
+    positioning: SkillPositioningTypes
 }
 
 export default SkillObjectTypes

@@ -1,7 +1,8 @@
 import styled from 'styled-components'
 import PositionStateTypes from '../../interfaces/positionStateTypes'
 import CharacterFacingStateTypes from '../../interfaces/character/characterFacingStateTypes'
- 
+import SkillPositioningTypes from '../../interfaces/skill/skillPositioningTypes'
+
 export const background = styled.div`
     width: 100vw;
     height: 100vh;
@@ -11,8 +12,8 @@ export const background = styled.div`
 `
 
 interface CharacterProps {
-    Width: number
-    Height: number
+    charWidth: number
+    charHeight: number
     pos: PositionStateTypes
     facing: CharacterFacingStateTypes
 }
@@ -23,8 +24,8 @@ export const character = styled.img.attrs<CharacterProps>((props) => ({
         bottom: `${props.pos.yState}px`,
     }
 }))<CharacterProps>`
-    width: ${props => props.Width}px;
-    height: ${props => props.Height}px;
+    width: ${props => props.charWidth}px;
+    height: ${props => props.charHeight}px;
     position: absolute;
     transform: scaleX(${props => props.facing.xState});
 `
@@ -37,21 +38,18 @@ export const skillArea = styled.div`
 
 interface SkillContainerProps {
     pos: PositionStateTypes
-    width: number
-    direction: [number, number]
+    charWidth: number
+    charHeight: number
+    skillWidth: number
+    positioning: SkillPositioningTypes
 }
 
 export const skillContainer = styled.div<SkillContainerProps>`
-    width: ${props => props.width}px;
+    width: ${props => props.skillWidth}px;
     height: auto;
     position: absolute;
-    left: ${
-        props => props.pos.xState - (
-            props.direction[0] === 1 ? -145 : 
-            props.direction[0] === 0 ? props.width / 2 :
-            props.width
-        )
-    }px;
+    transform: scaleX(${props => props.positioning.scaleX}) rotate(${props => props.positioning.rotate}deg);
+    left: ${props => props.pos.xState}px;
     bottom: ${props => props.pos.yState}px;
 `
 

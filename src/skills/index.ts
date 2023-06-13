@@ -10,21 +10,21 @@ export namespace skills {
         src: divide1Src,
         playtime: 0.85,
         cooldown: 1,
-        width: 300,
+        width: 400,
         position: 'stare'
     } as SkillInfoStateTypes
     export const divide2 = {
         src: divide2Src,
         playtime: 0.85,
         cooldown: 1,
-        width: 300,
+        width: 400,
         position: 'stare'
     } as SkillInfoStateTypes
     export const divide3 = {
         src: divide3Src,
         playtime: 0.85,
         cooldown: 1,
-        width: 300,
+        width: 400,
         position: 'stare'
     } as SkillInfoStateTypes
     export const impenetrableSkin = {
