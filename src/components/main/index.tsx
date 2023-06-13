@@ -1,5 +1,6 @@
 import { useCallback, useState } from 'react'
 import { InputController, moveKeyState, skillKeyState } from '../inputController'
+import Status from '../status/index'
 
 import { useCharacter } from '../../hooks/useCharacter'
 import { useSkill } from '../../hooks/useSkill'
@@ -19,6 +20,7 @@ const Main = () => {
     const character = useCharacter()
     const skill = useSkill()
 
+    
     const animate = useCallback(() => {
         character.direct(prevMoveKeyState, moveKeyState)
         setPrevMoveKeyState(() => ({ ...moveKeyState } as MoveKeyStateTypes))
@@ -32,6 +34,7 @@ const Main = () => {
     return (
         <style.background>
             <InputController />
+            <Status cooldown={skill.cooldownList}/>
             <style.character 
                 src={!(character.dir.xState || character.dir.yState) ? Character : Moving}
                 Width={character.width}
@@ -39,6 +42,17 @@ const Main = () => {
                 pos={character.pos}
                 facing={character.facing}
             />
+            <style.skillArea>
+                {
+                    skill.skillList.map(skill => {
+                        return (
+                            <style.skillContainer pos={skill.pos} width={300} direction={[0, 0]}>
+                                <style.skillEffect src={skill.animation} />
+                            </style.skillContainer>
+                        )
+                    })
+                }
+            </style.skillArea>
         </style.background>
     )
 }

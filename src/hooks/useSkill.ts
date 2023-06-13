@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 
 import SkillTypes from "../interfaces/skillTypes"
 import SkillObjectTypes from '../interfaces/skillObjectTypes'
@@ -18,14 +18,14 @@ export const useSkill: () => SkillTypes = () => {
     })
     const [skillObjectList, setSkillObjectList] = useState<SkillObjectTypes[]>([])
 
-    const handleSkillObjectList = useCallback((posState: PositionStateTypes, curTime: Date) => {
+    const handleSkillObjectList = useCallback((skillObjectState: SkillObjectTypes[], posState: PositionStateTypes, curTime: Date) => {
         curTime.setMilliseconds(curTime.getMilliseconds() + 800) // 0.8초의 실행시간 ( 임시 )
-        setSkillObjectList(prev => [...prev, ({
+        setSkillObjectList(prev => [...prev, {
             pos: { xState: posState.xState, yState: posState.yState }, // 스킬이 생성될 위치
             terminateTime: curTime, // 스킬 애니메이션 종료 시각
             animation: divide // 스킬 애니메이션 ( gif )
-        } as SkillObjectTypes)])
-    }, [setSkillObjectList])
+        }])
+    }, [])
 
     const handleSkillCooldown = useCallback((
         key: string,
@@ -39,7 +39,7 @@ export const useSkill: () => SkillTypes = () => {
         setSkillCooldownEndtime(() => cooldownEndtimeState) // setState를 이용하여 상태변경
         cooldownState[key as keyof SkillCooldownTypes] = 10 // 해당 스킬의 쿨타임 상태 변경
         setSkillCooldown(() => cooldownState) // setState를 이용하여 상태변경
-    }, [setSkillCooldown])
+    }, [])
 
     const handleCooldownFlow = useCallback((
         curTime: Date,
@@ -56,22 +56,24 @@ export const useSkill: () => SkillTypes = () => {
     }, [])
 
     const handleTerminatedSkill = useCallback((curTime: Date) => {
-
+        setSkillObjectList(prev => prev.filter(element => {
+            return element.terminateTime.getTime() - curTime.getTime() > 0
+        }))
     }, [])
 
     const reload = useCallback((keyState: SkillKeyStateTypes, posState: PositionStateTypes) => {
         const curTime = new Date(); // 현재 시간 객체
-        ['q', 'w', 'e', 'r'].forEach((key) => {
-            if (keyState[key as keyof SkillKeyStateTypes]) { // 해당 스킬키가 눌렸을 때
+        for (let key of 'qwer') {
+            if (keyState[key as keyof SkillKeyStateTypes] === 1) { // 해당 스킬키가 눌렸을 때
                 if (skillCooldown[key as keyof SkillKeyStateTypes] === 0) { // 쿨타임이 다 돌았을 경우에만
-                    handleSkillObjectList(posState, curTime) // 스킬 오브젝트 생성
+                    handleSkillObjectList([...skillObjectList], posState, curTime) // 스킬 오브젝트 생성
                     handleSkillCooldown(key, curTime, skillCooldown, skillCooldownEndtime) // 스킬 쿨타임 돌림
                 }
             }
-        })
+        }
         handleCooldownFlow(curTime, skillCooldown, skillCooldownEndtime) // 스킬 쿨다운이 줄어듦
         handleTerminatedSkill(curTime) // 실행이 끝난 스킬을 리스트에서 제거
-    }, [skillCooldown, handleSkillObjectList, handleSkillCooldown, handleCooldownFlow, handleTerminatedSkill])
+    }, [skillCooldown, skillObjectList, skillCooldownEndtime, handleSkillObjectList, handleSkillCooldown, handleCooldownFlow, handleTerminatedSkill])
 
     return {
         reload: reload,

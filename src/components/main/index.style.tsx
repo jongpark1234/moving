@@ -55,7 +55,7 @@ export const skillContainer = styled.div<SkillContainerProps>`
     bottom: ${props => props.pos.yState}px;
 `
 
-export const skillEffect = styled.img<{ direction: [number, number] }>`
+export const skillEffect = styled.img`
     width: 100%;
     max-width: 100%;
 `
