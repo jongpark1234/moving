@@ -1,8 +1,8 @@
-import SkillCooldownTypes from '../../interfaces/skill/skillCookdownTypes'
+import SkillKeyStateTypes from '../../interfaces/skill/skillKeyStateTypes'
 import * as style from './index.style'
 
 const Status = (
-    props: { cooldown: SkillCooldownTypes }
+    props: { cooldown: SkillKeyStateTypes }
 ) => {
     return (
         <style.statusContainer>
@@ -11,7 +11,7 @@ const Status = (
                     return (
                         <style.skillIcon key={key}>
                             <span>{
-                                Math.round(props.cooldown[key as keyof SkillCooldownTypes] / 100) / 10
+                                Math.round(props.cooldown[key as keyof SkillKeyStateTypes] / 100) / 10
                             }</span>
                         </style.skillIcon>
                     )

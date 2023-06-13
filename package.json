@@ -10,6 +10,7 @@
     "@types/node": "^16.18.34",
     "@types/react": "^18.2.7",
     "@types/react-dom": "^18.2.4",
+    "gif-encoder": "^0.7.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.11.2",
@@ -43,6 +44,7 @@
     ]
   },
   "devDependencies": {
+    "@types/gif-encoder": "^0.7.1",
     "@types/styled-components": "^5.1.26"
   }
 }

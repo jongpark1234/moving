@@ -5,11 +5,18 @@ import CharacterFacingStateTypes from '../interfaces/character/characterFacingSt
 import MoveDirStateTypes from '../interfaces/character/moveDirStateTypes'
 import MoveKeyStateTypes from '../interfaces/character/moveKeyStateTypes'
 import CharacterTypes from '../interfaces/character/characterTypes'
+import SkillInfoStateTypes from '../interfaces/skill/skillInfoStateTypes'
+import { skills } from '../skills'
+import SkillSetListTypes from '../interfaces/skill/skillSetListTypes'
 
 export const useCharacter: () => CharacterTypes = () => {
     const [WIDTH] = useState<number>(145);
     const [HEIGHT] = useState<number>(190);
     const [MOVEMENT] = useState<number>(10);
+    const [skillList] = useState<SkillSetListTypes>({
+        q: skills.divide1, w: skills.impenetrableSkin,
+        e: skills.divide3, r: skills.ruin
+    })
 
     const [pos, setPos] = useState<PositionStateTypes>({
         xState: 0, yState: 0
@@ -64,6 +71,7 @@ export const useCharacter: () => CharacterTypes = () => {
         width: WIDTH,
         height: HEIGHT,
         movement: MOVEMENT,
+        skillList: skillList,
         pos: pos,
         dir: dir,
         facing: facing,

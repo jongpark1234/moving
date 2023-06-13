@@ -18,7 +18,7 @@ const Main = () => {
         ArrowUp: 0, ArrowLeft: 0, ArrowDown: 0, ArrowRight: 0
     })
     const character = useCharacter()
-    const skill = useSkill()
+    const skill = useSkill(character.skillList)
     
     const animate = useCallback(() => {
         character.direct(prevMoveKeyState, moveKeyState)
