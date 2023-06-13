@@ -1,4 +1,4 @@
-import PositionStateTypes from "./positionStateTypes"
+import PositionStateTypes from "../positionStateTypes"
 import SkillCooldownTypes from "./skillCookdownTypes"
 import SkillKeyStateTypes from "./skillKeyStateTypes"
 import SkillObjectTypes from "./skillObjectTypes"

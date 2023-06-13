@@ -1,8 +1,8 @@
-import PositionStateTypes from "./positionStateTypes"
+import PositionStateTypes from "../positionStateTypes"
 
 interface SkillObjectTypes {
     pos: PositionStateTypes
-    terminateTime: Date
+    terminateTime: number
     animation: string
 }
 

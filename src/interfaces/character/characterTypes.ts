@@ -1,5 +1,5 @@
 import CharacterFacingStateTypes from "./characterFacingStateTypes"
-import PositionStateTypes from "./positionStateTypes"
+import PositionStateTypes from "../positionStateTypes"
 import MoveDirStateTypes from "./moveDirStateTypes"
 import MoveKeyStateTypes from "./moveKeyStateTypes"
 

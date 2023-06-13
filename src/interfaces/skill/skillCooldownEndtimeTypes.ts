@@ -1,8 +1,8 @@
 interface SkillCooldownEndtimeTypes {
-    q: Date
-    w: Date
-    e: Date
-    r: Date
+    q: number
+    w: number
+    e: number
+    r: number
 }
 
 export default SkillCooldownEndtimeTypes
