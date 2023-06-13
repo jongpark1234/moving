@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 import PositionStateTypes from '../../interfaces/positionStateTypes'
-import CharacterFacingStateTypes from '../../interfaces/characterFacingStateTypes'
+import CharacterFacingStateTypes from '../../interfaces/character/characterFacingStateTypes'
  
 export const background = styled.div`
     width: 100vw;

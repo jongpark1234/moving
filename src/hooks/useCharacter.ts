@@ -1,10 +1,10 @@
 import { useCallback, useState } from 'react'
 
 import PositionStateTypes from '../interfaces/positionStateTypes'
-import CharacterFacingStateTypes from '../interfaces/characterFacingStateTypes'
-import MoveDirStateTypes from '../interfaces/moveDirStateTypes'
-import MoveKeyStateTypes from '../interfaces/moveKeyStateTypes'
-import CharacterTypes from '../interfaces/characterTypes'
+import CharacterFacingStateTypes from '../interfaces/character/characterFacingStateTypes'
+import MoveDirStateTypes from '../interfaces/character/moveDirStateTypes'
+import MoveKeyStateTypes from '../interfaces/character/moveKeyStateTypes'
+import CharacterTypes from '../interfaces/character/characterTypes'
 
 export const useCharacter: () => CharacterTypes = () => {
     const [WIDTH] = useState<number>(145);

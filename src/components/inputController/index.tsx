@@ -1,7 +1,7 @@
 import { useLayoutEffect } from 'react'
 
-import MoveKeyStateTypes from '../../interfaces/moveKeyStateTypes'
-import SkillKeyStateTypes from '../../interfaces/skillKeyStateTypes'
+import MoveKeyStateTypes from '../../interfaces/character/moveKeyStateTypes'
+import SkillKeyStateTypes from '../../interfaces/skill/skillKeyStateTypes'
 
 export const moveKeyState: MoveKeyStateTypes = {
     ArrowUp: 0, ArrowLeft: 0, ArrowDown: 0, ArrowRight: 0

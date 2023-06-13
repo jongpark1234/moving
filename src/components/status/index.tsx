@@ -1,4 +1,4 @@
-import SkillCooldownTypes from '../../interfaces/skillCookdownTypes'
+import SkillCooldownTypes from '../../interfaces/skill/skillCookdownTypes'
 import * as style from './index.style'
 
 const Status = (

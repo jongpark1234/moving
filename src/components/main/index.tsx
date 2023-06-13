@@ -9,7 +9,7 @@ import { useAnimate } from '../../hooks/useAnimate'
 import Character from '../../images/characters/character_standing.png'
 import Moving from '../../images/characters/character_moving.gif'
 
-import MoveKeyStateTypes from '../../interfaces/moveKeyStateTypes'
+import MoveKeyStateTypes from '../../interfaces/character/moveKeyStateTypes'
 
 import * as style from './index.style'
 
@@ -19,7 +19,6 @@ const Main = () => {
     })
     const character = useCharacter()
     const skill = useSkill()
-
     
     const animate = useCallback(() => {
         character.direct(prevMoveKeyState, moveKeyState)
@@ -44,9 +43,9 @@ const Main = () => {
             />
             <style.skillArea>
                 {
-                    skill.skillList.map(skill => {
+                    skill.skillList.map((skill, idx) => {
                         return (
-                            <style.skillContainer pos={skill.pos} width={300} direction={[0, 0]}>
+                            <style.skillContainer pos={skill.pos} width={300} direction={[0, 0]} key={idx}>
                                 <style.skillEffect src={skill.animation} />
                             </style.skillContainer>
                         )
