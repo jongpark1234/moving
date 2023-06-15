@@ -32,7 +32,6 @@ export const useSkill: (character: CharacterTypes) => SkillTypes = (
             const key = i as keyof SkillKeyStateTypes
             if (skillKeyState[key] === 1) { // 해당 스킬키가 눌렸을 때
                 if (skillCooldown[key] === 0) { // 쿨타임이 다 돌았을 경우에만
-                    console.log('sex')
                     skillCooldownHandler( // 스킬 쿨타임 돌림
                         curTime,
                         key,

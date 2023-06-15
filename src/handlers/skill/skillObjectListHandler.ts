@@ -21,7 +21,7 @@ export const skillObjectListHandler = (
         },
         terminateTime: curTime + curSkill.playtime * 1000, // 스킬 시전 종료 시각
         positioning: skillPositioningHandler( // 스킬의 방향, 시전 위치, 종속성 등을 결정하는 상태
-            curSkill.position, character.facing, character.dir
+            curSkill, character
         )
     }])
 }
