@@ -2,7 +2,7 @@ import CharacterFacingStateTypes from "../../interfaces/character/characterFacin
 import MoveDirStateTypes from "../../interfaces/character/moveDirStateTypes"
 import SkillPositioningTypes from "../../interfaces/skill/skillPositioningTypes"
 
-export const handleSkillPositioning = (
+export const skillPositioningHandler = (
     skillPosition: string,
     facing: CharacterFacingStateTypes,
     dir: MoveDirStateTypes

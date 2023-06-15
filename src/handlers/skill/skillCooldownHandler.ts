@@ -2,9 +2,9 @@ import { SetStateAction, Dispatch } from 'react'
 import CharacterTypes from "../../interfaces/character/characterTypes"
 import SkillKeyStateTypes from "../../interfaces/skill/skillKeyStateTypes"
 
-export const handleSkillCooldown = (
-    key: keyof SkillKeyStateTypes,
+export const skillCooldownHandler = (
     curTime: number,
+    key: keyof SkillKeyStateTypes,
     character: CharacterTypes,
     setSkillCooldown: Dispatch<SetStateAction<SkillKeyStateTypes>>,
     setSkillCooldownEndtime: Dispatch<SetStateAction<SkillKeyStateTypes>>

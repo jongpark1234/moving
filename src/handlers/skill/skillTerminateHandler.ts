@@ -1,7 +1,7 @@
 import { SetStateAction, Dispatch } from 'react'
 import SkillObjectTypes from "../../interfaces/skill/skillObjectTypes"
 
-export const handleTerminatedSkill = (
+export const skillTerminateHandler = (
     curTime: number,
     setSkillObjectList: Dispatch<SetStateAction<SkillObjectTypes[]>>
 ) => {

@@ -7,10 +7,10 @@ import PositionStateTypes from '../interfaces/positionStateTypes'
 
 import CharacterTypes from '../interfaces/character/characterTypes'
 
-import { handleCooldownFlow } from '../handlers/skill/handleCooldownFlow'
-import { handleTerminatedSkill } from '../handlers/skill/handleTerminatedSkill'
-import { handleSkillCooldown } from '../handlers/skill/handleSkillCooldown'
-import { handleSkillObjectList } from '../handlers/skill/handleSkillObjectList'
+import { skillCooldownFlowHandler } from '../handlers/skill/skillCooldownFlowHandler'
+import { skillTerminateHandler } from '../handlers/skill/skillTerminateHandler'
+import { skillCooldownHandler } from '../handlers/skill/skillCooldownHandler'
+import { skillObjectListHandler } from '../handlers/skill/skillObjectListHandler'
 
 export const useSkill: (character: CharacterTypes) => SkillTypes = (
     character: CharacterTypes
@@ -32,16 +32,16 @@ export const useSkill: (character: CharacterTypes) => SkillTypes = (
             const key = i as keyof SkillKeyStateTypes
             if (skillKeyState[key] === 1) { // 해당 스킬키가 눌렸을 때
                 if (skillCooldown[key] === 0) { // 쿨타임이 다 돌았을 경우에만
-                    handleSkillObjectList( // 스킬 오브젝트 생성
-                        key,
+                    skillObjectListHandler( // 스킬 오브젝트 생성
                         curTime,
+                        key,
                         character,
                         positionState,
                         setSkillObjectList
                     )
-                    handleSkillCooldown( // 스킬 쿨타임 돌림
-                        key,
+                    skillCooldownHandler( // 스킬 쿨타임 돌림
                         curTime,
+                        key,
                         character,
                         setSkillCooldown,
                         setSkillCooldownEndtime
@@ -49,13 +49,12 @@ export const useSkill: (character: CharacterTypes) => SkillTypes = (
                 }
             }
         }
-        handleTerminatedSkill( // 실행이 끝난 스킬을 리스트에서 제거
+        skillTerminateHandler( // 실행이 끝난 스킬을 리스트에서 제거
             curTime,
             setSkillObjectList
         )
-        handleCooldownFlow( // 스킬 쿨다운이 흐륾
+        skillCooldownFlowHandler( // 스킬 쿨다운이 흐륾
             curTime,
-            skillCooldown,
             skillCooldownEndtime,
             setSkillCooldown
         )
