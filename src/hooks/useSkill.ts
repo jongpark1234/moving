@@ -32,19 +32,20 @@ export const useSkill: (character: CharacterTypes) => SkillTypes = (
             const key = i as keyof SkillKeyStateTypes
             if (skillKeyState[key] === 1) { // 해당 스킬키가 눌렸을 때
                 if (skillCooldown[key] === 0) { // 쿨타임이 다 돌았을 경우에만
-                    skillObjectListHandler( // 스킬 오브젝트 생성
-                        curTime,
-                        key,
-                        character,
-                        positionState,
-                        setSkillObjectList
-                    )
+                    console.log('sex')
                     skillCooldownHandler( // 스킬 쿨타임 돌림
                         curTime,
                         key,
                         character,
                         setSkillCooldown,
                         setSkillCooldownEndtime
+                    )
+                    skillObjectListHandler( // 스킬 오브젝트 생성
+                        curTime,
+                        key,
+                        character,
+                        positionState,
+                        setSkillObjectList
                     )
                 }
             }
@@ -55,6 +56,7 @@ export const useSkill: (character: CharacterTypes) => SkillTypes = (
         )
         skillCooldownFlowHandler( // 스킬 쿨다운이 흐륾
             curTime,
+            skillCooldown,
             skillCooldownEndtime,
             setSkillCooldown
         )
