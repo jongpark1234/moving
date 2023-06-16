@@ -1,46 +1,73 @@
 import CharacterTypes from "../../interfaces/character/characterTypes"
 import SkillInfoStateTypes from "../../interfaces/skill/skillInfoStateTypes"
 import SkillPositioningTypes from "../../interfaces/skill/skillPositioningTypes"
-// 'center' |
-//         'left' |
-//         'right' |
-//         'bottom' |
-//         'top' |
-//         'bottomLeft' |
-//         'bottomRight' |
-//         'topLeft' |
-//         'topRight' |
-//         'onGround' |
-//         'stare'
+
 export const skillPositioningHandler = (
     skill: SkillInfoStateTypes,
     character: CharacterTypes,
 ): SkillPositioningTypes => {
     switch (skill.position) {
         case 'center':
-            console.log({
-                left: character.width / 2 - skill.width / 2,
-                bottom: character.height / 2
-            })
-            break
+            return {
+                left: (character.width - skill.width) / 2,
+                bottom: (character.height - skill.height) / 2,
+            }
         case 'left':
-            console.log({
-                left: 0,
-                bottom: character.height / 2
-            })
-            break
+            return {
+                left: -skill.width,
+                bottom: (character.height - skill.height) / 2,
+            }
         case 'right':
-            console.log({
+            return {
                 left: character.width,
-                bottom: character.height / 2
-            })
-            break
+                bottom: (character.height - skill.height) / 2,
+            }
+        case 'bottom':
+            return {
+                left: (character.width - skill.width) / 2,
+                bottom: -skill.height,
+            }
+        case 'top':
+            return {
+                left: (character.width - skill.width) / 2,
+                bottom: character.height
+            }
+        case 'bottomLeft':
+            return {
+                left: -skill.width,
+                bottom: -skill.height
+            }
+        case 'bottomRight':
+            return {
+                left: character.width,
+                bottom: -skill.height
+            }
+        case 'topLeft':
+            return {
+                left: -skill.width,
+                bottom: character.height
+            }
+        case 'topRight':
+            return {
+                left: character.width,
+                bottom: character.height
+            }
+        case 'onGround':
+            return {
+                left: (character.width - skill.width) / 2,
+                bottom: 0
+            }
+        case 'stare':
+            return {
+                left: 0,
+                bottom: 0,
+                scaleX: character.facing.xState,
+                rotate: -character.dir.yState * (character.dir.xState ? 45 : 90)
+            }
         default:
-            break
-    }
-    
-    return {
-        scaleX: character.facing.xState,
-        rotate: -character.dir.yState * (character.dir.xState ? 45 : 90)
-    } as SkillPositioningTypes
+            return {
+                left: 0,
+                bottom: 0
+            }
+    }    
 }

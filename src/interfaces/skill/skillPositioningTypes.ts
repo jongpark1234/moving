@@ -1,6 +1,8 @@
 interface SkillPositioningTypes {
-    scaleX: number
-    rotate: number
+    left: number
+    bottom: number
+    scaleX?: number
+    rotate?: number
 }
 
 export default SkillPositioningTypes

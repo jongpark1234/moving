@@ -1,7 +1,6 @@
 import styled from 'styled-components'
-import PositionStateTypes from '../../interfaces/positionStateTypes'
-import CharacterFacingStateTypes from '../../interfaces/character/characterFacingStateTypes'
-import SkillPositioningTypes from '../../interfaces/skill/skillPositioningTypes'
+import CharacterTypes from '../../interfaces/character/characterTypes'
+import SkillObjectTypes from '../../interfaces/skill/skillObjectTypes'
 
 export const background = styled.div`
     width: 100vw;
@@ -12,22 +11,19 @@ export const background = styled.div`
 `
 
 interface CharacterProps {
-    charWidth: number
-    charHeight: number
-    pos: PositionStateTypes
-    facing: CharacterFacingStateTypes
+    character: CharacterTypes
 }
 
 export const character = styled.img.attrs<CharacterProps>((props) => ({
     style: {
-        left: `${props.pos.xState}px`,
-        bottom: `${props.pos.yState}px`,
+        left: `${props.character.pos.xState}px`,
+        bottom: `${props.character.pos.yState}px`,
     }
 }))<CharacterProps>`
-    width: ${props => props.charWidth}px;
-    height: ${props => props.charHeight}px;
+    width: ${props => props.character.width}px;
+    height: ${props => props.character.height}px;
     position: absolute;
-    transform: scaleX(${props => props.facing.xState});
+    transform: scaleX(${props => props.character.facing.xState});
 `
 
 export const skillArea = styled.div`
@@ -37,20 +33,21 @@ export const skillArea = styled.div`
 `
 
 interface SkillContainerProps {
-    pos: PositionStateTypes
-    charWidth: number
-    charHeight: number
-    skillWidth: number
-    positioning: SkillPositioningTypes
+    skill: SkillObjectTypes
+    character: CharacterTypes
 }
 
 export const skillContainer = styled.div<SkillContainerProps>`
-    width: ${props => props.skillWidth}px;
+    width: ${props => props.skill.width}px;
     height: auto;
     position: absolute;
-    transform: scaleX(${props => props.positioning.scaleX}) rotate(${props => props.positioning.rotate}deg);
-    left: ${props => props.pos.xState}px;
-    bottom: ${props => props.pos.yState}px;
+    transform: scaleX(${props => props.skill.positioning.scaleX}) rotate(${props => props.skill.positioning.rotate}deg);
+    left: ${
+        props => props.skill.pos.xState + props.skill.positioning.left 
+    }px;
+    bottom: ${
+        props => props.skill.pos.yState + props.skill.positioning.bottom
+    }px;
 `
 
 export const skillEffect = styled.img`

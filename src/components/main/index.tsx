@@ -36,21 +36,15 @@ const Main = () => {
             <Status cooldown={skill.cooldownList}/>
             <style.character 
                 src={!(character.dir.xState || character.dir.yState) ? Character : Moving}
-                charWidth={character.width}
-                charHeight={character.height}
-                pos={character.pos}
-                facing={character.facing}
+                character={character}
             />
             <style.skillArea>
                 {
                     skill.skillList.map((skill, idx) => {
                         return (
-                            <style.skillContainer 
-                            pos={skill.pos} 
-                            skillWidth={skill.width}
-                            charWidth={character.width}
-                            charHeight={character.height}
-                            positioning={skill.positioning}
+                            <style.skillContainer
+                            skill={skill}
+                            character={character}
                             key={idx}>
                                 <style.skillEffect src={skill.src} loading='lazy'/>
                             </style.skillContainer>

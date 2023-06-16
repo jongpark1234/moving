@@ -3,6 +3,7 @@ interface SkillInfoStateTypes {
     playtime: number
     cooldown: number
     width: number
+    height: number
     position: 
         'center' |
         'left' |
@@ -15,6 +16,7 @@ interface SkillInfoStateTypes {
         'topRight' |
         'onGround' |
         'stare'
+    chase: boolean
 }
 
 export default SkillInfoStateTypes
