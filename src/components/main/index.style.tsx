@@ -43,10 +43,10 @@ export const skillContainer = styled.div<SkillContainerProps>`
     position: absolute;
     transform: scaleX(${props => props.skill.positioning.scaleX}) rotate(${props => props.skill.positioning.rotate}deg);
     left: ${
-        props => props.skill.pos.xState + props.skill.positioning.left 
+        props => (props.skill.chase ? props.character.pos.xState : props.skill.pos.xState) + props.skill.positioning.left
     }px;
     bottom: ${
-        props => props.skill.pos.yState + props.skill.positioning.bottom
+        props => (props.skill.chase ? props.character.pos.yState : props.skill.pos.yState) + props.skill.positioning.bottom
     }px;
 `
 
